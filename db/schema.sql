@@ -1,8 +1,10 @@
+-- Create fresh employee database
 DROP DATABASE IF EXISTS employee_db;
 CREATE DATABASE employee_db;
-
+-- Select employee database
 USE employee_db;
 
+-- Create tables
 CREATE TABLE departments (
   id INT NOT NULL,
   dept_name VARCHAR(30),
@@ -24,5 +26,6 @@ CREATE TABLE employees (
   role_id INT,
   manager_id INT,
   FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE SET NULL,
+  -- Set manager_id to NULL when employee has no manager
   FOREIGN KEY (manager_id) REFERENCES employees(id) ON DELETE SET NULL
 );
