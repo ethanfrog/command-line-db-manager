@@ -138,6 +138,22 @@ function init() {
       });
       break;
 
+      case 'Add a department':
+      console.log("Adding new department");
+      break;
+
+      case 'Add a role':
+      console.log("Adding new role");
+      break;
+
+      case 'Add an employee':
+      console.log("Adding new employee");
+      break;
+
+      case 'Update an employee role':
+      console.log("Updating an employee");
+      break;
+
       default:
         console.log("Invalid action selected");
         break;
