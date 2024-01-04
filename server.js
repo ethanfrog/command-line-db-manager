@@ -40,6 +40,73 @@ const actions = [
   },
 ];
 
+// Ask user for new department info
+const newDepartment = [
+  {
+    type: 'input',
+    name: 'id',
+    message: 'What is the id of the new department?',
+  },
+  {
+    type: 'input',
+    name: 'name',
+    message: 'What is the name of the new department?',
+  },
+];
+
+// Ask user for new role info
+const newRole = [
+  {
+    type: 'input',
+    name: 'id',
+    message: 'What is the id of the new role?',
+  },
+  {
+    type: 'input',
+    name: 'title',
+    message: 'What is the title of the new role?',
+  },
+  {
+    type: 'input',
+    name: 'salary',
+    message: 'What is the salary of the new role?',
+  },
+  {
+    type: 'input',
+    name: 'dept_id',
+    message: 'What department id does the new role belong to?',
+  },
+];
+
+// Ask user for new department info
+const newEmployee = [
+  {
+    type: 'input',
+    name: 'id',
+    message: 'What is the id of the new employee?',
+  },
+  {
+    type: 'input',
+    name: 'first_name',
+    message: 'What is the first name of the new employee?',
+  },
+  {
+    type: 'input',
+    name: 'last_name',
+    message: 'What is the last name of the new employee?',
+  },
+  {
+    type: 'input',
+    name: 'role_id',
+    message: 'What is the id of their role?',
+  },
+  {
+    type: 'input',
+    name: 'manager_id',
+    message: 'What is the id of their manager?',
+  },
+];
+
 // Function to initialize app
 function init() {
   console.log("init is being run");
