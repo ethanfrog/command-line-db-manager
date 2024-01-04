@@ -3,10 +3,11 @@ const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const express = require('express');
 
+// Define port and create an express app
 const PORT = 3001;
 const app = express();
 
-// Express middleware
+// Express request parsing middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -24,45 +25,61 @@ const db = mysql.createConnection(
 );
 
 // Ask user for an SQL action
-// const actions = [
-//   {
-//     type: 'list',
-//     name: 'action',
-//     message: 'What would you like to do?',
-//     choices: ['View all departments',
-//             'View all roles',
-//             'View all employees',
-//             'Add a department',
-//             'Add a role',
-//             'Add an employee',
-//             'Update an employee role'],
-//   },
-// ];
+const actions = [
+  {
+    type: 'list',
+    name: 'action',
+    message: 'What would you like to do?',
+    choices: ['View all departments',
+            'View all roles',
+            'View all employees',
+            'Add a department',
+            'Add a role',
+            'Add an employee',
+            'Update an employee role'],
+  },
+];
 
 // Function to initialize app
-// function init() {
-//   inquirer.prompt(actions).then((actionResponse) => {
-//     console.log('Got response');
-//     console.log(actionResponse);
+function init() {
+  console.log("init is being run");
+
+  inquirer.prompt(actions).then((actionResponse) => {
+    console.log('Response received');
+    console.log(actionResponse);
     
-//     switch(actionResponse) {
-//       case 'View all departments':
-//         console.log("Execute SQL query");
-//         db.query('SELECT * FROM departments', function (err, res) {
-//           console.log(res);
-//         });
-//         break;
-//       default:
-//         break;
-//     }
-//   });
-// }
+    switch(actionResponse.action) {
 
-db.query('SELECT * FROM departments', function (err, res) {
-  console.log(res);
-});
+      case 'View all departments':
+        console.log("Selecting the departments table");
+        db.query('SELECT * FROM departments', function (err, res) {
+          console.log(res);
+        });
+        break;
 
-// Default response for any other request (Not Found)
+      case 'View all roles':
+        console.log("Selecting the roles table");
+        db.query('SELECT * FROM roles', function (err, res) {
+          console.log(res);
+        });
+        break;
+
+      case 'View all employees':
+      console.log("Selecting the employees table");
+      db.query('SELECT * FROM employees', function (err, res) {
+        console.log(res);
+      });
+      break;
+
+      default:
+        console.log("Invalid action selected");
+        break;
+    }
+  });
+}
+
+// Default server response (Not Found)
+// Currently given for every server request
 app.use((req, res) => {
   res.status(404).end();
 });
@@ -71,4 +88,4 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// init();
+init();
