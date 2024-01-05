@@ -36,7 +36,7 @@ const actions = [
             'Add a department',
             'Add a role',
             'Add an employee',
-            'Update an employee role'],
+            'Update an employee role',],
   },
 ];
 
@@ -92,39 +92,48 @@ const newEmployee = [
   },
 ];
 
+// Display the given table in the console
+function selectTable(tableName) {
+  console.log(`Selecting the ${tableName} table`);
+    db.query(`SELECT * FROM ${tableName}`, function (err, res) {
+      console.log(res);
+    });
+}
+
+// Add an entry to the departments table
+function addDepartment() {
+  inquirer.prompt(newDepartment).then((parameters) => {
+    console.log('Response received');
+    console.log(parameters);
+    db.query(`INSERT INTO departments (dept_Name) VALUES ('${parameters.name}')`);
+    });
+}
+
 // Function to initialize app
 function init() {
-  console.log("init is being run");
+  console.log("App being initialized");
+  newQuery();
+}
 
+function newQuery() {
   inquirer.prompt(actions).then((actionResponse) => {
     console.log('Response received');
     console.log(actionResponse);
     
     switch(actionResponse.action) {
-
       case 'View all departments':
-        console.log("Selecting the departments table");
-        db.query('SELECT * FROM departments', function (err, res) {
-          console.log(res);
-        });
+        selectTable('departments');
         break;
-
       case 'View all roles':
-        console.log("Selecting the roles table");
-        db.query('SELECT * FROM roles', function (err, res) {
-          console.log(res);
-        });
+        selectTable('roles');
         break;
-
       case 'View all employees':
-      console.log("Selecting the employees table");
-      db.query('SELECT * FROM employees', function (err, res) {
-        console.log(res);
-      });
-      break;
+        selectTable('employees');
+        break;
 
       case 'Add a department':
       console.log("Adding new department");
+      addDepartment();
       break;
 
       case 'Add a role':
@@ -142,8 +151,7 @@ function init() {
       default:
         console.log("Invalid action selected");
         break;
-    }
-  });
+    }});
 }
 
 // Default server response (Not Found)
