@@ -24,7 +24,7 @@ const db = mysql.createConnection(
   console.log(`Connected to the employee_db database.`)
 );
 
-// Ask user for an SQL action
+// Choices for SQL actions
 const actions = [
   {
     type: 'list',
@@ -39,8 +39,7 @@ const actions = [
             'Update an employee role',],
   },
 ];
-
-// Ask user for new department info
+// New department prompts
 const newDepartment = [
   {
     type: 'input',
@@ -48,8 +47,7 @@ const newDepartment = [
     message: 'What is the name of the new department?',
   },
 ];
-
-// Ask user for new role info
+// New role prompts
 const newRole = [
   {
     type: 'input',
@@ -67,8 +65,7 @@ const newRole = [
     message: 'What department id does the new role belong to?',
   },
 ];
-
-// Ask user for new department info
+// New employee prompts
 const newEmployee = [
   {
     type: 'input',
@@ -91,7 +88,7 @@ const newEmployee = [
     message: 'What is the id of their manager?',
   },
 ];
-
+// Updated role prompts
 const updatedRole = [
   {
     type: 'input',
@@ -116,52 +113,47 @@ function selectTable(tableName) {
 // Add an entry to the departments table
 function addDepartment() {
   inquirer.prompt(newDepartment).then((params) => {
-    console.log('Response received');
-    console.log(params);
     db.query(`INSERT INTO departments (dept_Name) VALUES ('${params.name}')`);
+    console.log("New department added");
     });
 }
 // Add an entry to the roles table
 function addRole() {
   inquirer.prompt(newRole).then((params) => {
-    console.log('Response received');
-    console.log(params);
     db.query(`INSERT INTO roles (title, salary, department_id)
     VALUES ('${params.title}', ${params.salary}, ${params.dept_id})`);
+    console.log("New role added");
     });
 }
 // Add an entry to the employees table
 function addEmployee() {
   inquirer.prompt(newEmployee).then((params) => {
-    console.log('Response received');
-    console.log(params);
     db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id)
     VALUES ('${params.first_name}', '${params.last_name}', ${params.role_id}, ${params.manager_id})`);
+    console.log("New employee added");
     });
 }
 
 // Update an employee role
 function updateRole() {
   inquirer.prompt(updatedRole).then((params) => {
-    console.log('Response received');
-    console.log(params);
     db.query(`UPDATE employees
     SET role_id = ${params.new_role_id}
     WHERE id = ${params.emp_id}`);
+    console.log("Employee role updated");
     });
 }
 
-// Function to initialize app
+// Initialize the app
 function init() {
-  console.log("App being initialized");
+  //console.log("init is being called");
   newQuery();
 }
 
+// Prompt the user for an SQL action
 function newQuery() {
   inquirer.prompt(actions).then((actionResponse) => {
-    console.log('Response received');
-    console.log(actionResponse);
-    
+    // Process the action command given by the user
     switch(actionResponse.action) {
       case 'View all departments':
         selectTable('departments');
@@ -172,35 +164,29 @@ function newQuery() {
       case 'View all employees':
         selectTable('employees');
         break;
-
       case 'Add a department':
-      console.log("Adding new department");
-      addDepartment();
-      break;
-
+        console.log("Adding new department");
+        addDepartment();
+        break;
       case 'Add a role':
-      console.log("Adding new role");
-      addRole();
-      break;
-
+        console.log("Adding new role");
+        addRole();
+        break;
       case 'Add an employee':
-      console.log("Adding new employee");
-      addEmployee();
-      break;
-
+        console.log("Adding new employee");
+        addEmployee();
+        break;
       case 'Update an employee role':
-      console.log("Updating an employee");
-      updateRole();
-      break;
-
+        console.log("Updating an employee");
+        updateRole();
+        break;
       default:
         console.log("Invalid action selected");
         break;
     }});
 }
 
-// Default server response (Not Found)
-// Currently given for every server request
+// Default server response (Not Found), currently given for every server request
 app.use((req, res) => {
   res.status(404).end();
 });
