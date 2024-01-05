@@ -92,6 +92,19 @@ const newEmployee = [
   },
 ];
 
+const updatedRole = [
+  {
+    type: 'input',
+    name: 'emp_id',
+    message: 'Enter an employee id',
+  },
+  {
+    type: 'input',
+    name: 'new_role_id',
+    message: 'Enter the id of their new role',
+  },
+];
+
 // Display the given table in the console
 function selectTable(tableName) {
   console.log(`Selecting the ${tableName} table`);
@@ -124,6 +137,17 @@ function addEmployee() {
     console.log(params);
     db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id)
     VALUES ('${params.first_name}', '${params.last_name}', ${params.role_id}, ${params.manager_id})`);
+    });
+}
+
+// Update an employee role
+function updateRole() {
+  inquirer.prompt(updatedRole).then((params) => {
+    console.log('Response received');
+    console.log(params);
+    db.query(`UPDATE employees
+    SET role_id = ${params.new_role_id}
+    WHERE id = ${params.emp_id}`);
     });
 }
 
@@ -166,6 +190,7 @@ function newQuery() {
 
       case 'Update an employee role':
       console.log("Updating an employee");
+      updateRole();
       break;
 
       default:
