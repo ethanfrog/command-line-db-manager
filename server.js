@@ -44,11 +44,6 @@ const actions = [
 const newDepartment = [
   {
     type: 'input',
-    name: 'id',
-    message: 'What is the id of the new department?',
-  },
-  {
-    type: 'input',
     name: 'name',
     message: 'What is the name of the new department?',
   },
@@ -56,11 +51,6 @@ const newDepartment = [
 
 // Ask user for new role info
 const newRole = [
-  {
-    type: 'input',
-    name: 'id',
-    message: 'What is the id of the new role?',
-  },
   {
     type: 'input',
     name: 'title',
@@ -80,11 +70,6 @@ const newRole = [
 
 // Ask user for new department info
 const newEmployee = [
-  {
-    type: 'input',
-    name: 'id',
-    message: 'What is the id of the new employee?',
-  },
   {
     type: 'input',
     name: 'first_name',
@@ -168,7 +153,7 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  //console.log(`Server running on port ${PORT}`);
 });
 
 init();
