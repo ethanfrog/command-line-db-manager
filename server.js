@@ -102,10 +102,28 @@ function selectTable(tableName) {
 
 // Add an entry to the departments table
 function addDepartment() {
-  inquirer.prompt(newDepartment).then((parameters) => {
+  inquirer.prompt(newDepartment).then((params) => {
     console.log('Response received');
-    console.log(parameters);
-    db.query(`INSERT INTO departments (dept_Name) VALUES ('${parameters.name}')`);
+    console.log(params);
+    db.query(`INSERT INTO departments (dept_Name) VALUES ('${params.name}')`);
+    });
+}
+// Add an entry to the roles table
+function addRole() {
+  inquirer.prompt(newRole).then((params) => {
+    console.log('Response received');
+    console.log(params);
+    db.query(`INSERT INTO roles (title, salary, department_id)
+    VALUES ('${params.title}', ${params.salary}, ${params.dept_id})`);
+    });
+}
+// Add an entry to the employees table
+function addEmployee() {
+  inquirer.prompt(newEmployee).then((params) => {
+    console.log('Response received');
+    console.log(params);
+    db.query(`INSERT INTO employees (first_name, last_name, role_id, manager_id)
+    VALUES ('${params.first_name}', '${params.last_name}', ${params.role_id}, ${params.manager_id})`);
     });
 }
 
@@ -138,10 +156,12 @@ function newQuery() {
 
       case 'Add a role':
       console.log("Adding new role");
+      addRole();
       break;
 
       case 'Add an employee':
       console.log("Adding new employee");
+      addEmployee();
       break;
 
       case 'Update an employee role':
